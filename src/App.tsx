@@ -1,12 +1,23 @@
-import { Layout } from "components/layout/Layout";
-import { FeedView } from "view/FeedView/FeedView";
+import {Layout} from 'components/layout/Layout';
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import FeedView from 'view/FeedView';
+import LoginView from 'view/LoginView';
+import NotFoundView from 'view/NotFound';
+import PostsView from 'view/PostsView';
 
 function App() {
-  return (
-    <Layout>
-      <FeedView />
-    </Layout>
-  );
+    return (
+        <Layout>
+            <Router>
+                <Routes>
+                    <Route index element={<FeedView />} />
+                    <Route path="/login" element={<LoginView />} />
+                    <Route path="/posts" element={<PostsView />} />
+                    <Route path="*" element={<NotFoundView />} />
+                </Routes>
+            </Router>
+        </Layout>
+    );
 }
 
 export default App;

@@ -20,12 +20,6 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "baseUrl": "src",
-    // "paths": {
-    //   "@components/*": ["./components/*"],
-    //   "@utils/*": ["./utils/*"],
-    //   "@appTypes/*": ["./types/*"],
-    //   "@lib/*": ["./lib/*"]
-    // }
   },
   "include": [
     "src"

@@ -1,7 +1,10 @@
 import Button from "components/ui/Button";
 import Input from "components/ui/Input";
+import { useTranslation } from "react-i18next";
 
 export function LoginView() {
+  const { t } = useTranslation("auth");
+
   return (
     <form className="">
       <div
@@ -19,7 +22,7 @@ export function LoginView() {
         variant={"primary"}
         type={"submit"}
       >
-        Login
+        {t("login")}
       </Button>
     </form>
   );
