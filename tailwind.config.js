@@ -27,6 +27,10 @@ module.exports = {
         extend: {
             borderWidth: {
                 1: '1px'
+            },
+            flex: {
+                2: '2 2 0%',
+                4: '4 4 0%'
             }
         }
     },

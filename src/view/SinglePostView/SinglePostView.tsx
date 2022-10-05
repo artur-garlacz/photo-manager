@@ -1,4 +1,5 @@
-import {PostItemView} from 'components/posts/PostItemView/PostItemView';
+import {CommentItemView} from 'components/posts/CommentListView/CommentItemView';
+import {PostItemView} from 'components/posts/PostItemView';
 import {useSinglePostView} from './SinglePostView.hook';
 
 export function SinglePostView() {
@@ -7,7 +8,7 @@ export function SinglePostView() {
     if (isLoadingPost || !post) {
         return (
             <>
-                <PostItemView isLoading />
+                <PostItemView />
             </>
         );
     }
@@ -15,6 +16,7 @@ export function SinglePostView() {
     return (
         <section className="flex flex-col p-2">
             <PostItemView data={post} />
+            {comments && !!comments.length && <CommentItemView />}
         </section>
     );
 }
