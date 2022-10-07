@@ -29,12 +29,14 @@ export function PostsView() {
     }, [selectedPost, data, isLoading]);
 
     return (
-        <div className="flex w-full">
-            <aside className="w-1/4"></aside>
-            <section className="flex w-3/5 flex-col p-2">{postsList}</section>
-            <aside className="fixed w-1/5 right-0 top-10 flex-1 border-l-1 border-b-gray-200">
+        <>
+            <section className="flex xl:max-w-3xl flex-col p-2">
+                <PostItemView />
+                {postsList}
+            </section>
+            <aside className="none xl:fixed w-1/4 right-0 top-10 overflow-y-auto flex-1 border-l-1 border-b-gray-200">
                 {selectedPost && <CommentListView postId={selectedPost} />}
             </aside>
-        </div>
+        </>
     );
 }

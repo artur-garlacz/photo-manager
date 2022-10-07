@@ -2,6 +2,9 @@
 module.exports = {
     content: ['./src/**/*.{js,jsx,ts,tsx}'],
     theme: {
+        fontFamily: {
+            sans: ['Open Sans', 'sans-serif']
+        },
         colors: {
             primary: '#FC654A',
             secondary: '#0ABAB5',
@@ -31,6 +34,10 @@ module.exports = {
             flex: {
                 2: '2 2 0%',
                 4: '4 4 0%'
+            },
+            spacing: {
+                '7vh': '7vh',
+                '93vh': '93vh'
             }
         }
     },

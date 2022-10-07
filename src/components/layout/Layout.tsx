@@ -8,7 +8,7 @@ type LayoutProps = {
 export const Layout = ({children}: LayoutProps) => (
     <>
         <Header />
-        <main className="h-full w-full max-w-7xl mx-auto sm:px-6 bg-white px-4 flex flex-col items-center justify-center">
+        <main className="h-93vh w-full max-w-7xl mx-auto sm:px-6 bg-white px-4 flex flex-col items-center justify-center">
             {children}
         </main>
     </>

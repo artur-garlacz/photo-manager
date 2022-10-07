@@ -5,6 +5,7 @@ import LoginView from 'view/LoginView';
 import NotFoundView from 'view/NotFound';
 import PostsView from 'view/PostsView';
 import SinglePostView from 'view/SinglePostView';
+import UserProfileView from 'view/UserProfileView';
 
 function App() {
     return (
@@ -13,6 +14,7 @@ function App() {
                 <Routes>
                     <Route index element={<FeedView />} />
                     <Route path="/login" element={<LoginView />} />
+                    <Route path="/profile" element={<UserProfileView />} />
                     <Route path="/posts" element={<PostsView />} />
                     <Route path="/posts/:postId" element={<SinglePostView />} />
                     <Route path="*" element={<NotFoundView />} />

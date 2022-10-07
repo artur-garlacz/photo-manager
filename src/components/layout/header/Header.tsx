@@ -2,8 +2,8 @@ import {Link} from 'react-router-dom';
 
 export const Header = () => {
     return (
-        <header className="sticky top-0 z-40 bg-white border-b-1 border-gray-200">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <header className="sticky  top-0 z-40 bg-white border-b-1 border-gray-200">
+            <div className="max-w-7xl h-full mx-auto px-4 sm:px-6">
                 <nav className="flex justify-between items-center py-2 md:space-x-10">
                     <h1 className="font-semibold text-3xl text-left">AG</h1>
                     <ul className="inline-flex gap-5">

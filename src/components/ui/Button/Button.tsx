@@ -24,10 +24,11 @@ export const Button = <T extends ElementType = 'button'>({
         {
             className: cx(
                 {
-                    'bg-black': variant === 'primary',
-                    'bg-transparent hover:text-gray-500': variant === 'secondary'
+                    'bg-black text-white': variant === 'primary',
+                    'bg-transparent hover:text-gray-500': variant === 'secondary',
+                    'border-1 border-black': outline
                 },
-                'flex justify-center items-center',
+                'flex justify-center items-center px-3 py-2 rounded-md w-20 text-xs',
                 className
             ),
             ...props
