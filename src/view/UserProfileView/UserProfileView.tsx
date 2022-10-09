@@ -92,7 +92,9 @@ export function UserProfileView() {
                     </div>
                 </section>
             </div>
-            <EditUserDataModal isOpen={isOpen} onClose={() => setOpen(false)} />
+            {data && (
+                <EditUserDataModal isOpen={isOpen} user={data} onClose={() => setOpen(false)} />
+            )}
         </>
     );
 }

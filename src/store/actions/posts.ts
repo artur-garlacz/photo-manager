@@ -9,17 +9,17 @@ export const postsApi = api.injectEndpoints({
         getPost: build.query<Post, Post['id']>({
             query: id => `posts/${id}`,
             providesTags: (_post, _err, id) => [{type: 'Posts', id}]
+        }),
+        createPost: build.mutation<Post, Partial<Post>>({
+            query(body) {
+                return {
+                    url: `posts`,
+                    method: 'POST',
+                    body
+                };
+            },
+            invalidatesTags: ['Posts']
         })
-        // addPost: build.mutation<Post, Partial<Post>>({
-        //   query(body) {
-        //     return {
-        //       url: `posts`,
-        //       method: "POST",
-        //       body,
-        //     };
-        //   },
-        //   invalidatesTags: ["Posts"],
-        // }),
         // deletePost: build.mutation<{ success: boolean; id: number }, number>({
         //   query(id) {
         //     return {
@@ -32,4 +32,4 @@ export const postsApi = api.injectEndpoints({
     })
 });
 
-export const {useGetPostsQuery, useGetPostQuery} = postsApi;
+export const {useGetPostsQuery, useGetPostQuery, useCreatePostMutation} = postsApi;
