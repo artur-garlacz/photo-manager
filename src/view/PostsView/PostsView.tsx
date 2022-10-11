@@ -1,12 +1,26 @@
-import {CommentListView} from 'components/posts/CommentListView';
+import {DeletePostModal} from 'components/modal/DeletePostModal';
 import {PostItemView} from 'components/posts/PostItemView';
-import {useMemo, useState} from 'react';
+import {useCallback, useMemo, useState} from 'react';
 import {useGetPostsQuery} from 'store/actions/posts';
+import {useNavigate} from 'react-router-dom';
 import {Post} from 'types';
+import {Sidebar} from 'components/layout/Layout';
+import Button from 'components/ui/Button';
+import {CreatePostModal} from 'components/modal/CreatePostModal';
 
 export function PostsView() {
-    const [selectedPost, setPost] = useState<Post['id']>();
+    const [isOpenCreateModal, setOpenCreateModal] = useState(false);
+    const [selectedPost, setPost] = useState<Post>();
+    const navigate = useNavigate();
     const {data, isLoading} = useGetPostsQuery();
+
+    const handleSelect = useCallback((post?: Post) => {
+        setPost(post);
+    }, []);
+
+    const handleToggle = useCallback(() => {
+        setOpenCreateModal(state => !state);
+    }, []);
 
     const postsList = useMemo(() => {
         if (!data || isLoading)
@@ -21,22 +35,38 @@ export function PostsView() {
         return data.map(post => (
             <PostItemView
                 key={post.id}
-                selectedPost={selectedPost}
                 data={post}
-                onClick={() => setPost(post.id)}
+                onDelete={() => handleSelect(post)}
+                onShowMore={() => navigate(`/posts/${post.id}`)}
             />
         ));
-    }, [selectedPost, data, isLoading]);
+    }, [data, handleSelect, isLoading, navigate]);
 
     return (
         <>
-            <section className="flex xl:max-w-3xl flex-col p-2">
-                <PostItemView />
-                {postsList}
-            </section>
-            <aside className="none xl:fixed w-1/4 right-0 top-10 overflow-y-auto flex-1 border-l-1 border-b-gray-200">
-                {selectedPost && <CommentListView postId={selectedPost} />}
-            </aside>
+            <div className="flex">
+                <section className="flex flex-auto flex-col py-12 pr-4">
+                    <div className="flex justify-between border-b pb-3">
+                        <h2 className="text-normal font-semibold">Posts</h2>
+                        <Button variant="secondary" outline onClick={handleToggle}>
+                            Create post
+                        </Button>
+                    </div>
+
+                    {postsList}
+                </section>
+                <Sidebar>c</Sidebar>
+            </div>
+            {isOpenCreateModal && (
+                <CreatePostModal isOpen={isOpenCreateModal} onClose={handleToggle} />
+            )}
+            {!!selectedPost && (
+                <DeletePostModal
+                    post={selectedPost}
+                    isOpen={!!selectedPost}
+                    onClose={() => handleSelect()}
+                />
+            )}
         </>
     );
 }

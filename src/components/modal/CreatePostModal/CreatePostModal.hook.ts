@@ -20,7 +20,7 @@ export function useCreatePostModal({onClose}: Props) {
     // userId: number;
     // id: number;
 
-    const {values, touched, errors, handleChange} = useFormik({
+    const {values, touched, errors, handleSubmit, handleChange} = useFormik({
         initialValues: {
             title: '',
             body: ''
@@ -40,5 +40,5 @@ export function useCreatePostModal({onClose}: Props) {
         }
     });
 
-    return {isLoading, values, touched, errors, handleChange};
+    return {isLoading, values, touched, errors, handleSubmit, handleChange};
 }

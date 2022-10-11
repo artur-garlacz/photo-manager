@@ -31,7 +31,7 @@ export function useEditUserDataModal({onClose, user}: Props) {
 
     const {id, ...initialValues} = user;
 
-    const {values, touched, errors, handleChange} = useFormik({
+    const {values, touched, errors, handleSubmit, handleChange} = useFormik({
         initialValues: {
             ...initialValues
         },
@@ -50,5 +50,5 @@ export function useEditUserDataModal({onClose, user}: Props) {
         }
     });
 
-    return {isLoading, values, touched, errors, handleChange};
+    return {isLoading, values, touched, errors, handleSubmit, handleChange};
 }

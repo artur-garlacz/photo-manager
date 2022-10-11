@@ -25,10 +25,10 @@ export const Button = <T extends ElementType = 'button'>({
             className: cx(
                 {
                     'bg-black text-white': variant === 'primary',
-                    'bg-transparent hover:text-gray-500': variant === 'secondary',
-                    'border-1 border-black': outline
+                    'bg-transparent hover:text-white hover:bg-black': variant === 'secondary',
+                    'border-1 border-gray-200': outline
                 },
-                'flex justify-center items-center px-3 py-2 rounded-md w-20 text-xs',
+                'flex justify-center items-center px-3 py-2 rounded-md min-w-20 text-xs font-semibold ease-in-out duration-200',
                 className
             ),
             ...props

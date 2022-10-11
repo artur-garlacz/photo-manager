@@ -1,11 +1,12 @@
-import {FaUserCircle} from 'react-icons/fa';
+import Button from 'components/ui/Button';
 import {Comment} from 'types';
 
 type CommentItemViewProps = {
     data?: Comment;
+    onDelete?: () => void;
 };
 
-export function CommentItemView({data}: CommentItemViewProps) {
+export function CommentItemView({data, onDelete}: CommentItemViewProps) {
     if (!data) {
         return <></>;
     }
@@ -23,9 +24,13 @@ export function CommentItemView({data}: CommentItemViewProps) {
                             <span className="text-gray-600 font-normal">by</span> {email}
                         </p>
                     </div>
-                    {/* <Button variant="secondary" className="text-xs font-semibold">
-                        See more
-                    </Button> */}
+                    <Button
+                        onClick={onDelete}
+                        variant="secondary"
+                        className="text-xs font-semibold"
+                    >
+                        Delete comment
+                    </Button>
                 </div>
             </article>
         </>

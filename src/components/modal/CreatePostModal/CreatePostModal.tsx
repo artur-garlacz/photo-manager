@@ -6,7 +6,7 @@ import {useCreatePostModal} from './CreatePostModal.hook';
 type CreatePostModalProps = ModalProps;
 
 export function CreatePostModal({isOpen, onClose}: CreatePostModalProps) {
-    const {isLoading, values, handleChange} = useCreatePostModal({onClose});
+    const {isLoading, values, handleSubmit, handleChange} = useCreatePostModal({onClose});
 
     return (
         <Modal
@@ -15,10 +15,10 @@ export function CreatePostModal({isOpen, onClose}: CreatePostModalProps) {
             className="max-w-2xl"
             title="Payment successful"
         >
-            <form className="flex flex-col">
+            <form className="flex flex-col" onSubmit={handleSubmit}>
                 <div className="bg-gray-100 mt-6 p-4 rounded-md">
                     <h3 className="font-semibold">Post content</h3>
-                    <div className={'grid lg:grid-cols-2 gap-x-6 gap-y-2 mt-2'}>
+                    <div className={'flex flex-col pt-4 gap-y-4'}>
                         <Input
                             id={'title'}
                             name={'title'}
@@ -46,7 +46,7 @@ export function CreatePostModal({isOpen, onClose}: CreatePostModalProps) {
                     >
                         Cancel
                     </Button>
-                    <Button disabled={isLoading} onClick={onClose}>
+                    <Button disabled={isLoading} type="submit">
                         Save
                     </Button>
                 </div>

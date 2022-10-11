@@ -7,7 +7,10 @@ import {useEditUserDataModal} from './EditUserDataModal.hook';
 type EditUserDataModalProps = ModalProps & {user: User};
 
 export function EditUserDataModal({isOpen, user, onClose}: EditUserDataModalProps) {
-    const {isLoading, values, handleChange} = useEditUserDataModal({onClose, user});
+    const {isLoading, values, handleSubmit, handleChange} = useEditUserDataModal({
+        onClose,
+        user
+    });
 
     return (
         <Modal
@@ -16,7 +19,7 @@ export function EditUserDataModal({isOpen, user, onClose}: EditUserDataModalProp
             className="max-w-2xl"
             title="Payment successful"
         >
-            <form className="flex flex-col">
+            <form className="flex flex-col" onSubmit={handleSubmit}>
                 <div className="bg-gray-100 mt-6 p-4 rounded-md">
                     <h3 className="font-semibold">Personal info</h3>
                     <div className={'grid lg:grid-cols-2 gap-x-6 gap-y-2 mt-2'}>
@@ -113,7 +116,7 @@ export function EditUserDataModal({isOpen, user, onClose}: EditUserDataModalProp
 
                 <div className="flex justify-end mt-4">
                     <Button
-                        disabled={!isLoading}
+                        disabled={isLoading}
                         variant="secondary"
                         className="mr-2"
                         outline
@@ -121,7 +124,7 @@ export function EditUserDataModal({isOpen, user, onClose}: EditUserDataModalProp
                     >
                         Cancel
                     </Button>
-                    <Button disabled={!isLoading} onClick={onClose}>
+                    <Button disabled={isLoading} type="submit">
                         Save
                     </Button>
                 </div>

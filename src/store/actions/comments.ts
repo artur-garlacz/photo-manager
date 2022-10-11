@@ -8,9 +8,36 @@ type GetCommentsArgs = {
 export const commentsApi = api.injectEndpoints({
     endpoints: build => ({
         getComments: build.query<Comment[], GetCommentsArgs>({
-            query: ({postId}: GetCommentsArgs) => ({url: 'comments', params: {postId}})
+            query: ({postId}: GetCommentsArgs) => ({url: 'comments', params: {postId}}),
+            providesTags: result =>
+                result
+                    ? [
+                          ...result.map(({id}) => ({type: 'Comments', id} as const)),
+                          {type: 'Comments', id: 'LIST'}
+                      ]
+                    : [{type: 'Comments', id: 'LIST'}]
+        }),
+        createComment: build.mutation<Comment, Partial<Comment>>({
+            query(body) {
+                return {
+                    url: `comments`,
+                    method: 'POST',
+                    body
+                };
+            },
+            invalidatesTags: ['Comments']
+        }),
+        deleteComment: build.mutation<{success: boolean; id: Comment['id']}, Comment['id']>({
+            query(id) {
+                return {
+                    url: `comments/${id}`,
+                    method: 'DELETE'
+                };
+            },
+            invalidatesTags: post => [{type: 'Comments', id: post?.id}]
         })
     })
 });
 
-export const {useGetCommentsQuery} = commentsApi;
+export const {useGetCommentsQuery, useDeleteCommentMutation, useCreateCommentMutation} =
+    commentsApi;

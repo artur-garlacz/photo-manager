@@ -3,10 +3,16 @@ import ContentLoader from 'react-content-loader';
 import {Post} from 'types';
 import cx from 'classnames';
 import {UserBriefView} from './UserBriefView';
+import randomImage from 'assets/images/city-random.jpg';
 
-type PostItemViewProps = {data?: Post; selectedPost?: Post['id']; onClick?: () => void};
+type PostItemViewProps = {
+    data?: Post;
+    selectedPost?: Post['id'];
+    onDelete?: () => void;
+    onShowMore?: () => void;
+};
 
-export function PostItemView({selectedPost, data, onClick}: PostItemViewProps) {
+export function PostItemView({selectedPost, data, onDelete, onShowMore}: PostItemViewProps) {
     if (!data) {
         return (
             <ContentLoader
@@ -31,20 +37,40 @@ export function PostItemView({selectedPost, data, onClick}: PostItemViewProps) {
     return (
         <article
             className={cx(
-                'flex flex-col items-start w-full my-4 px-4 p-5 border-b-gray-200 border-b-1',
+                'flex justify-between w-full my-4 pr-4 py-10 border-b-gray-200 border-b-1',
                 {'bg-gray-200': selectedPost === id}
             )}
         >
-            <h2 className="font-semibold text-left text-lg pb-2">{title}</h2>
-            <p className="lg:w-4/5 text-xs text-gray-500">{body}</p>
-            <div className="w-full flex justify-between mt-3">
-                <div className="flex items-center">
-                    <UserBriefView userId={userId} />
+            <div>
+                <div className="flex justify-start w-full items-center pb-2">
+                    <h2 className="font-semibold text-left text-xl mr-2">{title}</h2>
                 </div>
-                <Button onClick={onClick} variant="secondary" className="text-xs font-semibold">
-                    See comments
-                </Button>
+                <p className="lg:w-4/5 text-xs text-gray-500 pb-3">{body}</p>
+                <div className="flex">
+                    <Button
+                        onClick={onShowMore}
+                        variant="secondary"
+                        className="text-xs font-bold px-0 justify-start"
+                    >
+                        See more
+                    </Button>
+                    {!!onDelete && (
+                        <Button
+                            onClick={onDelete}
+                            variant="secondary"
+                            className="ml-2 text-xs font-bold"
+                        >
+                            Delete post
+                        </Button>
+                    )}
+                </div>
+                <div className="w-full flex justify-between mt-3">
+                    <div className="flex items-center">
+                        <UserBriefView userId={userId} />
+                    </div>
+                </div>
             </div>
+            <img className="w-1/3 rounded-md" src={randomImage} alt={title} />
         </article>
     );
 }

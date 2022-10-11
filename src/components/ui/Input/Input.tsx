@@ -44,7 +44,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
                             {'bg-gray-200': disabled},
                             {
                                 'border-red': error,
-                                'border-gray-300 focus-within:border-primary': !error
+                                'border-gray-300 focus-within:border-black': !error
                             },
                             'flex flex-row items-center bg-white flex-auto rounded-3xl border box-border transition'
                         )}

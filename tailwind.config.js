@@ -8,7 +8,6 @@ module.exports = {
         colors: {
             primary: '#FC654A',
             secondary: '#0ABAB5',
-
             white: '#FFFFFF',
             black: '#000000',
             yellow: '#F4E04D',
@@ -28,12 +27,21 @@ module.exports = {
             }
         },
         extend: {
+            width: {
+                '200px': '200px',
+                '300px': '300px'
+            },
+            minWidth: {
+                20: '5rem'
+            },
             borderWidth: {
                 1: '1px'
             },
             flex: {
                 2: '2 2 0%',
-                4: '4 4 0%'
+                4: '4 4 0%',
+                '200px': '0 0 200px',
+                '300px': '0 0 300px'
             },
             spacing: {
                 '7vh': '7vh',
