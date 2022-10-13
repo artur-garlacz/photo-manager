@@ -5,7 +5,9 @@ export const Header = () => {
         <header className="sticky top-0 z-40 bg-white border-b-1 border-gray-200">
             <div className="max-w-7xl h-full mx-auto px-4 sm:px-6">
                 <nav className="flex justify-between items-center py-2 md:space-x-10">
-                    <h1 className="font-semibold text-3xl text-left">AG</h1>
+                    <h1 className="font-semibold text-3xl text-left">
+                        <Link to="/">AG</Link>
+                    </h1>
                     <ul className="inline-flex gap-5">
                         <li>
                             <Link className="text-sm font-bold" to="posts">

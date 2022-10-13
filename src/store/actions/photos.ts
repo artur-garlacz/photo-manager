@@ -1,19 +1,19 @@
 import {api} from 'services/api';
-import {Album} from 'types';
+import {Photo} from 'types';
 
 export const photosApi = api.injectEndpoints({
     endpoints: build => ({
-        getAlbums: build.query<Album[], void>({
+        getPhotos: build.query<Photo[], void>({
             query: () => ({url: 'photos'}),
             providesTags: result =>
                 result
                     ? [
-                          ...result.map(({id}) => ({type: 'Albums', id} as const)),
-                          {type: 'Albums', id: 'LIST'}
+                          ...result.map(({id}) => ({type: 'Photos', id} as const)),
+                          {type: 'Photos', id: 'LIST'}
                       ]
-                    : [{type: 'Albums', id: 'LIST'}]
+                    : [{type: 'Photos', id: 'LIST'}]
         })
     })
 });
 
-export const {useGetAlbumsQuery} = photosApi;
+export const {useGetPhotosQuery} = photosApi;

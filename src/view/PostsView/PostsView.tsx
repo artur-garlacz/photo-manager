@@ -44,7 +44,7 @@ export function PostsView() {
 
     return (
         <>
-            <div className="flex">
+            <div className="flex w-full">
                 <section className="flex flex-auto flex-col py-12 pr-4">
                     <div className="flex justify-between border-b pb-3">
                         <h2 className="text-normal font-semibold">Posts</h2>
