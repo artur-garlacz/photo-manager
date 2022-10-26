@@ -1,17 +1,36 @@
+import {DeletePhotoModal} from 'components/modal/DeletePhotoModal';
+import Button from 'components/ui/Button';
+import {useState} from 'react';
 import {Photo} from 'types';
 
-type PhotoItemViewProps = {
-    data: Photo;
-};
+type PhotoItemViewProps = {data: Photo; onDelete?: () => void};
 
-export function PhotoItemView({data}: PhotoItemViewProps) {
+export function PhotoItemView({data, onDelete}: PhotoItemViewProps) {
+    const [isOpen, setOpen] = useState(false);
     return (
-        <figure className="relative w-auto h-auto overflow-hidden">
-            <img className="z-10 rounded-md" src={data.url} alt={data.title} />
-            <div className="absolute h-16 opacity-60 bg-white w-full left-0 bottom-0 z-40"></div>
-            <figcaption className="absolute h-16 w-full left-0 bottom-0 z-40 text-xs font-semibold p-4">
-                {data.title}
-            </figcaption>
-        </figure>
+        <>
+            <figure className={`w-auto p-2 flex box-border border-b py-4`}>
+                <img className="z-10 rounded-md h-48" src={data.url} alt={data.title} />
+
+                <div className="p-4">
+                    <figcaption className="w-full text-regular font-semibold ">
+                        {data.title}
+                    </figcaption>
+                    {!!onDelete && (
+                        <Button outline variant="secondary" className="mt-2" onClick={onDelete}>
+                            Delete photo
+                        </Button>
+                    )}
+                </div>
+            </figure>
+
+            {isOpen && (
+                <DeletePhotoModal
+                    photoId={data.id}
+                    isOpen={isOpen}
+                    onClose={() => setOpen(false)}
+                />
+            )}
+        </>
     );
 }

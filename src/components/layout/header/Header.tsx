@@ -1,8 +1,12 @@
 import {Link} from 'react-router-dom';
+import {useAppSelector} from 'store';
+import {selectIsAuthenticated} from 'store/reducers';
 
-export const Header = () => {
+export function Header() {
+    const isAuthenticated = useAppSelector(selectIsAuthenticated);
+
     return (
-        <header className="sticky top-0 z-40 bg-white border-b-1 border-gray-200">
+        <header className="sticky top-0 z-40 h-53px bg-white border-b-1 border-gray-200">
             <div className="max-w-7xl h-full mx-auto px-4 sm:px-6">
                 <nav className="flex justify-between items-center py-2 md:space-x-10">
                     <h1 className="font-semibold text-3xl text-left">
@@ -15,16 +19,21 @@ export const Header = () => {
                             </Link>
                         </li>
                         <li>
-                            <Link className="text-sm font-bold" to="albums">
-                                Photos
+                            <Link className="text-sm font-bold" to="/">
+                                Feed
                             </Link>
                         </li>
                     </ul>
-                    <Link className="text-sm font-bold" to="profile">
-                        My account
-                    </Link>
+
+                    {isAuthenticated ? (
+                        <Link className="text-sm font-bold" to="profile">
+                            My account
+                        </Link>
+                    ) : (
+                        <span />
+                    )}
                 </nav>
             </div>
         </header>
     );
-};
+}

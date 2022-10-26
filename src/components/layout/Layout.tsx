@@ -1,15 +1,19 @@
-import type {ReactNode} from 'react';
+import type {CSSProperties, ReactNode} from 'react';
 import {Header} from './header/Header';
 
 type LayoutProps = {
     readonly children: ReactNode;
+    style?: CSSProperties;
 };
 
-export function Layout({children}: LayoutProps) {
+export function Layout({children, style}: LayoutProps) {
     return (
         <>
             <Header />
-            <main className="w-full max-w-7xl mx-auto sm:px-6 bg-white px-4 flex flex-col items-center justify-center">
+            <main
+                className="w-full min-h-[calc(100vh_-_53px)] relative max-w-7xl mx-auto sm:px-6 bg-white px-4"
+                style={style}
+            >
                 {children}
             </main>
         </>

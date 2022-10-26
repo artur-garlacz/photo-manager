@@ -1,8 +1,8 @@
 import cx from 'classnames';
 import {ComponentPropsWithoutRef, createElement, ElementType} from 'react';
 
-type ButtonProps<T extends ElementType> = {
-    variant?: 'primary' | 'secondary';
+export type ButtonProps<T extends ElementType> = {
+    variant?: 'primary' | 'secondary' | 'custom';
     size?: 'lg' | 'sm' | 'xs';
     outline?: boolean;
     className?: string;
@@ -26,6 +26,7 @@ export const Button = <T extends ElementType = 'button'>({
                 {
                     'bg-black text-white': variant === 'primary',
                     'bg-transparent hover:text-white hover:bg-black': variant === 'secondary',
+                    '': variant === 'custom',
                     'border-1 border-gray-200': outline
                 },
                 'flex justify-center items-center px-3 py-2 rounded-md min-w-20 text-xs font-semibold ease-in-out duration-200',

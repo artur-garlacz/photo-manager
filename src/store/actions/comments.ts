@@ -34,7 +34,7 @@ export const commentsApi = api.injectEndpoints({
                     method: 'DELETE'
                 };
             },
-            invalidatesTags: post => [{type: 'Comments', id: post?.id}]
+            invalidatesTags: comment => [{type: 'Comments', id: comment?.id}]
         })
     })
 });

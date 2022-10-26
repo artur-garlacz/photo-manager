@@ -9,9 +9,11 @@ type InfoLabelProps = {
 
 export function InfoLabel({label, children, className}: InfoLabelProps) {
     return (
-        <div className={cx('flex flex-col border-b-1 border-b-gray-200', className)}>
+        <div className={cx('flex flex-col', className)}>
             <label className="text-gray-400 text-xs mb-1">{label}</label>
-            <span className="text-sm">{children}</span>
+            <span className="flex items-center px-4 h-10 text-sm border border-gray-300 text-gray-900 rounded-3xl bg-gray-100 w-full box-border">
+                {children}
+            </span>
         </div>
     );
 }

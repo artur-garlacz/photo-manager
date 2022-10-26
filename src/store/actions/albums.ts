@@ -1,10 +1,12 @@
 import {api} from 'services/api';
 import {Album} from 'types';
 
+export type GetAlbumsArgs = Partial<Pick<Album, 'userId'>>;
+
 export const albumsApi = api.injectEndpoints({
     endpoints: build => ({
-        getAlbums: build.query<Album[], void>({
-            query: () => ({url: 'albums'}),
+        getAlbums: build.query<Album[], GetAlbumsArgs>({
+            query: (params: GetAlbumsArgs) => ({url: 'albums', params}),
             providesTags: result =>
                 result
                     ? [

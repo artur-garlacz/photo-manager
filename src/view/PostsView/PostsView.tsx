@@ -7,11 +7,13 @@ import {Post} from 'types';
 import {Sidebar} from 'components/layout/Layout';
 import Button from 'components/ui/Button';
 import {CreatePostModal} from 'components/modal/CreatePostModal';
+import {useAppSelector} from 'store';
 
 export function PostsView() {
     const [isOpenCreateModal, setOpenCreateModal] = useState(false);
     const [selectedPost, setPost] = useState<Post>();
     const navigate = useNavigate();
+    const {user, isAuthenticated} = useAppSelector(state => state.auth);
     const {data, isLoading} = useGetPostsQuery();
 
     const handleSelect = useCallback((post?: Post) => {
@@ -32,15 +34,19 @@ export function PostsView() {
                 </>
             );
 
-        return data.map(post => (
-            <PostItemView
-                key={post.id}
-                data={post}
-                onDelete={() => handleSelect(post)}
-                onShowMore={() => navigate(`/posts/${post.id}`)}
-            />
-        ));
-    }, [data, handleSelect, isLoading, navigate]);
+        return data.map(post => {
+            const additionalProps =
+                user && user.id === post.userId ? {onDelete: () => handleSelect(post)} : {};
+            return (
+                <PostItemView
+                    key={post.id}
+                    data={post}
+                    onShowMore={() => navigate(`/posts/${post.id}`)}
+                    {...additionalProps}
+                />
+            );
+        });
+    }, [data, handleSelect, isLoading, navigate, user]);
 
     return (
         <>
@@ -48,9 +54,11 @@ export function PostsView() {
                 <section className="flex flex-auto flex-col py-12 pr-4">
                     <div className="flex justify-between border-b pb-3">
                         <h2 className="text-normal font-semibold">Posts</h2>
-                        <Button variant="secondary" outline onClick={handleToggle}>
-                            Create post
-                        </Button>
+                        {isAuthenticated && (
+                            <Button variant="secondary" outline onClick={handleToggle}>
+                                Create post
+                            </Button>
+                        )}
                     </div>
 
                     {postsList}

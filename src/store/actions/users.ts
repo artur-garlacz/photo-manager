@@ -10,6 +10,10 @@ export const usersApi = api.injectEndpoints({
             query: id => `users/${id}`,
             providesTags: (_post, _err, id) => [{type: 'Users', id}]
         }),
+        loginUser: build.query<User, User['id']>({
+            query: id => `users/${id}`,
+            providesTags: (_post, _err, id) => [{type: 'Users', id}]
+        }),
         updateUser: build.mutation<User, Partial<User>>({
             query(data) {
                 const {id, ...body} = data;
@@ -24,4 +28,5 @@ export const usersApi = api.injectEndpoints({
     })
 });
 
-export const {useGetUserQuery, useGetUsersQuery, useUpdateUserMutation} = usersApi;
+export const {useGetUserQuery, useGetUsersQuery, useLoginUserQuery, useUpdateUserMutation} =
+    usersApi;

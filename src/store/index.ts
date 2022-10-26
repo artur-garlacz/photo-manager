@@ -1,4 +1,4 @@
-import store from "./createStore";
+import store from './store';
 
 export default store;
-export * from "./createStore";
+export * from './store';

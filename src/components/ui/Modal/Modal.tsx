@@ -11,9 +11,17 @@ export type ModalArgs = {
     title: string;
     children: ReactNode | ReactNode[];
     className?: string;
+    maxSize?: 'md' | 'lg' | 'xl' | '2xl' | '3xl';
 };
 
-export function Modal({isOpen, title, children, className, onClose}: ModalProps & ModalArgs) {
+export function Modal({
+    maxSize = 'md',
+    isOpen,
+    title,
+    children,
+    className,
+    onClose
+}: ModalProps & ModalArgs) {
     return (
         <Transition appear show={isOpen} as={Fragment}>
             <Dialog as="div" className="relative z-50" onClose={onClose}>
@@ -42,7 +50,8 @@ export function Modal({isOpen, title, children, className, onClose}: ModalProps 
                         >
                             <Dialog.Panel
                                 className={cx(
-                                    'w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all',
+                                    'w-full transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all',
+                                    `max-w-${maxSize}`,
                                     className
                                 )}
                             >

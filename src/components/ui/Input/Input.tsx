@@ -64,27 +64,6 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
                             step={step}
                             {...props}
                         />
-
-                        {/* {React.Children.map(children, (child) => {
-              if (
-                !child ||
-                (child as React.ReactElement<InputIconProps, typeof InputIcon>).props.placement !==
-                  'right'
-              ) {
-                return null;
-              }
-
-              return React.cloneElement(
-                child as React.ReactElement<InputIconProps, typeof InputIcon>,
-                {
-                  role: 'figure',
-                  className: cx(
-                    'flex items-center justify-center h-12 px-2',
-                    (child as React.ReactElement<InputIconProps, typeof InputIcon>).props.className,
-                  ),
-                },
-              );
-            })} */}
                     </div>
                 </div>
 
@@ -103,16 +82,6 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
                                 aria-label={'error'}
                             >
                                 {error}
-                            </span>
-                        )}
-
-                        {maxLength && type !== 'text' && (
-                            <span
-                                className={'tracking-tight text-gray-600'}
-                                role={'status'}
-                                aria-label={'length'}
-                            >
-                                {`${value?.length ?? 0}/${maxLength}`}
                             </span>
                         )}
                     </div>
