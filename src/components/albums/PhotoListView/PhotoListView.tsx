@@ -1,48 +1,24 @@
-import {GetPhotosArgs, useGetPhotosQuery} from 'store/actions/photos';
+import {GetPhotosArgs} from 'store/actions/photos';
 import {PhotoItemView} from './PhotoItemView';
 import {Photo} from 'types';
-import {useCallback, useEffect, useState} from 'react';
+import {useCallback, useState} from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
-import {useAppSelector} from 'store';
 import {DeletePhotoModal} from 'components/modal/DeletePhotoModal';
-import {useGetAlbumsQuery} from 'store/actions';
+import {usePhotoListView} from './PhotoListView.hook';
 
-type PhotoListViewProps = {
+export type PhotoListViewProps = {
     filters: GetPhotosArgs;
+    userId?: number;
 };
 
-export function PhotoListView({filters}: PhotoListViewProps) {
-    const {data: photos, isLoading} = useGetPhotosQuery(filters);
-    const {data: albums} = useGetAlbumsQuery({});
-    const itemsPerPage = 20;
+export function PhotoListView(props: PhotoListViewProps) {
     const [selectedPhoto, setPhoto] = useState<Photo>();
-    const [hasMore, setHasMore] = useState(true);
-    const [records, setRecords] = useState(itemsPerPage);
-    const user = useAppSelector(state => state.auth.user);
-
-    useEffect(() => {
-        setRecords(photos && photos?.length < 20 ? photos?.length : 20);
-    }, [photos, filters]);
+    const {loadMore, photos, isLoadingPhotos, records, hasMore, albums, user} =
+        usePhotoListView(props);
 
     const handleSelect = useCallback((photo?: Photo) => {
         setPhoto(photo);
     }, []);
-
-    const loadMore = () => {
-        if (!photos) return;
-
-        if (records >= photos.length) {
-            setHasMore(false);
-        } else {
-            const nextPageRecords =
-                photos?.length - records < itemsPerPage
-                    ? photos?.length - records
-                    : itemsPerPage;
-            setTimeout(() => {
-                setRecords(records + nextPageRecords);
-            }, 1000);
-        }
-    };
 
     const showItems = (photos: Photo[]) => {
         const items = [];
@@ -50,7 +26,7 @@ export function PhotoListView({filters}: PhotoListViewProps) {
             if (photos.length >= records) {
                 const item = photos[i];
 
-                const findAlbum = albums?.find(
+                const findAlbum = albums.find(
                     album => !!user && album.userId === user.id && album.id === item.albumId
                 );
 
@@ -66,7 +42,7 @@ export function PhotoListView({filters}: PhotoListViewProps) {
         return items;
     };
 
-    if (!photos || isLoading || !photos.length) {
+    if (!photos || isLoadingPhotos || !photos.length) {
         return <>No data</>;
     }
 

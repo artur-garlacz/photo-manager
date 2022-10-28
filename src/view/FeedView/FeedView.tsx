@@ -1,4 +1,3 @@
-import {Tab} from '@headlessui/react';
 import cx from 'classnames';
 import {AlbumListView} from 'components/albums/AlbumListView';
 import {PhotoListView} from 'components/albums/PhotoListView';
@@ -33,14 +32,11 @@ export function FeedView() {
         setOpenCreateModal(state => !state);
     }, []);
 
-    const handleChange = useCallback(
-        ({target: {name, value}}: React.ChangeEvent<HTMLInputElement>) => {
-            // searchParams.set(name, value);
-            setSearchParams({[name]: value});
-            setFilters(state => ({...state, [name]: value ? value : undefined}));
-        },
-        []
-    );
+    const handleChange = ({target: {name, value}}: React.ChangeEvent<HTMLInputElement>) => {
+        // searchParams.set(name, value);
+        setSearchParams({[name]: value});
+        setFilters(state => ({...state, [name]: value ? value : undefined}));
+    };
 
     const handleSetFeed = (type: FeedType) => () => {
         setFeedType(type);
@@ -50,7 +46,7 @@ export function FeedView() {
 
     return (
         <div className="flex flex-grow h-full overflow-y-hidden">
-            <section className="flex flex-auto flex-col py-12 pr-3">
+            <section className="flex flex-auto flex-col py-12 pr-4">
                 <Tabs className="bg-black rounded-md mb-5 p-0.5">
                     <Button
                         variant="custom"

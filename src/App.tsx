@@ -24,7 +24,7 @@ function App() {
                     <Route index element={<FeedView />} />
 
                     <Route path="/login" element={<LoginView />} />
-                    <Route path="/profile" element={<UserProfileView />} />
+                    <Route path="/users/:userId" element={<UserProfileView />} />
                     <Route path="/posts" element={<PostsView />} />
                     <Route path="/posts/:postId" element={<SinglePostView />} />
                     <Route path="*" element={<NotFoundView />} />

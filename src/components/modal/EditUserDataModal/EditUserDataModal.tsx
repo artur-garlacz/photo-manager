@@ -13,7 +13,7 @@ export function EditUserDataModal({isOpen, user, onClose}: EditUserDataModalProp
     });
 
     return (
-        <Modal onClose={onClose} isOpen={isOpen} maxSize="3xl" title="User data">
+        <Modal onClose={onClose} isOpen={isOpen} maxSize="2xl" title="User data">
             <form className="flex flex-col" onSubmit={handleSubmit}>
                 <div className="bg-gray-100 mt-6 p-4 rounded-md">
                     <h3 className="font-semibold">Personal info</h3>

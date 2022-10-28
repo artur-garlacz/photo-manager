@@ -1,52 +1,17 @@
-import {DeletePostModal} from 'components/modal/DeletePostModal';
-import {PostItemView} from 'components/posts/PostItemView';
-import {useCallback, useMemo, useState} from 'react';
-import {useGetPostsQuery} from 'store/actions/posts';
-import {useNavigate} from 'react-router-dom';
-import {Post} from 'types';
+import {useCallback, useState} from 'react';
 import {Sidebar} from 'components/layout/Layout';
 import Button from 'components/ui/Button';
 import {CreatePostModal} from 'components/modal/CreatePostModal';
 import {useAppSelector} from 'store';
+import {PostListView} from 'components/posts/PostListView';
 
 export function PostsView() {
     const [isOpenCreateModal, setOpenCreateModal] = useState(false);
-    const [selectedPost, setPost] = useState<Post>();
-    const navigate = useNavigate();
-    const {user, isAuthenticated} = useAppSelector(state => state.auth);
-    const {data, isLoading} = useGetPostsQuery();
-
-    const handleSelect = useCallback((post?: Post) => {
-        setPost(post);
-    }, []);
+    const isAuthenticated = useAppSelector(state => state.auth.isAuthenticated);
 
     const handleToggle = useCallback(() => {
         setOpenCreateModal(state => !state);
     }, []);
-
-    const postsList = useMemo(() => {
-        if (!data || isLoading)
-            return (
-                <>
-                    {Array.from(Array(5).keys()).map((_, index) => (
-                        <PostItemView key={index} />
-                    ))}
-                </>
-            );
-
-        return data.map(post => {
-            const additionalProps =
-                user && user.id === post.userId ? {onDelete: () => handleSelect(post)} : {};
-            return (
-                <PostItemView
-                    key={post.id}
-                    data={post}
-                    onShowMore={() => navigate(`/posts/${post.id}`)}
-                    {...additionalProps}
-                />
-            );
-        });
-    }, [data, handleSelect, isLoading, navigate, user]);
 
     return (
         <>
@@ -61,19 +26,12 @@ export function PostsView() {
                         )}
                     </div>
 
-                    {postsList}
+                    <PostListView />
                 </section>
-                <Sidebar>c</Sidebar>
+                <Sidebar>sd</Sidebar>
             </div>
             {isOpenCreateModal && (
                 <CreatePostModal isOpen={isOpenCreateModal} onClose={handleToggle} />
-            )}
-            {!!selectedPost && (
-                <DeletePostModal
-                    post={selectedPost}
-                    isOpen={!!selectedPost}
-                    onClose={() => handleSelect()}
-                />
             )}
         </>
     );

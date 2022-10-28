@@ -1,60 +1,82 @@
-import {InfoLabel} from 'components/ui/InfoLabel';
 import Button from 'components/ui/Button';
 import {EditUserDataModal} from 'components/modal/EditUserDataModal';
-import {useEffect, useState} from 'react';
-import {useAppSelector} from 'store';
+import {useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {useNavigate} from 'react-router-dom';
+import {Sidebar} from 'components/layout/Layout';
+import {UserBriefView} from 'components/posts/PostItemView/UserBriefView';
+import {useUserProfileView} from './UserProfileView.hook';
+import {PostListView} from 'components/posts/PostListView';
+import {PhotoListView} from 'components/albums/PhotoListView';
+import cx from 'classnames';
+import {Tabs} from 'components/ui/Tab';
+
+type PhotoType = 'post' | 'photo';
 
 export function UserProfileView() {
     const [isOpen, setOpen] = useState(false);
-    const navigate = useNavigate();
-    const {isAuthenticated, user} = useAppSelector(state => state.auth);
-
     const {t} = useTranslation(['common', 'user']);
+    const [feedType, setFeedType] = useState<PhotoType>('photo');
 
-    useEffect(() => {
-        if (!isAuthenticated) navigate('/');
-    }, [isAuthenticated, navigate]);
+    const {user, isLoggedUserProfile} = useUserProfileView();
+
+    const handleSetFeed = (type: PhotoType) => () => {
+        setFeedType(type);
+    };
+
+    if (!user) {
+        return <>User not found</>;
+    }
+
+    const isPost = feedType === 'post';
 
     return (
         <>
-            <section className="flex flex-col justify-center gap-3 p-4 max-w-5xl mx-auto h-[calc(100vh_-_53px)]">
-                <nav className="flex justify-between">
-                    <h2 className="text-xl font-bold">{t('user:profile')}</h2>
-                    {isAuthenticated && (
-                        <Button variant="primary" onClick={() => setOpen(true)}>
-                            {t('common:edit')}
+            <div className="flex">
+                <section className="flex flex-auto flex-col py-12 pr-4">
+                    <Tabs className="bg-black rounded-md mb-5 p-0.5">
+                        <Button
+                            variant="custom"
+                            className={cx({
+                                'bg-white': isPost,
+                                'text-white': !isPost
+                            })}
+                            onClick={handleSetFeed('post')}
+                        >
+                            Posts
                         </Button>
+                        <Button
+                            variant="custom"
+                            className={cx({
+                                'bg-white': !isPost,
+                                'text-white': isPost
+                            })}
+                            onClick={handleSetFeed('photo')}
+                        >
+                            Photos
+                        </Button>
+                    </Tabs>
+                    {isPost ? (
+                        <PostListView filters={{userId: user.id}} />
+                    ) : (
+                        <>
+                            <PhotoListView userId={user?.id} filters={{}} />
+                        </>
                     )}
-                </nav>
+                </section>
+                <Sidebar>
+                    <nav className="flex justify-between mb-2">
+                        <h2 className="text-xl font-bold">{t('user:profile')}</h2>
+                        {isLoggedUserProfile && (
+                            <Button variant="primary" onClick={() => setOpen(true)}>
+                                {t('common:edit')}
+                            </Button>
+                        )}
+                    </nav>
 
-                <div className="grid grid-cols-2 gap-4">
-                    <InfoLabel label="Nazwa">{user?.name}</InfoLabel>
-                    <InfoLabel label="Nazwa użytkownika">{user?.username}</InfoLabel>
-                    <InfoLabel label="Adres email">{user?.email}</InfoLabel>
-                    <InfoLabel label="Numer telefonu">{user?.phone}</InfoLabel>
-                    <InfoLabel label="Strona">{user?.website}</InfoLabel>
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                    <InfoLabel label="Miasto">{user?.address.city}</InfoLabel>
-                    <InfoLabel label="Ulica">{user?.address.street}</InfoLabel>
-
-                    <InfoLabel label="Kod pocztowy">{user?.address.zipcode}</InfoLabel>
-
-                    <InfoLabel label="Geo lokalizacja">
-                        {user?.address.geo.lat} {user?.address.geo.lng}
-                    </InfoLabel>
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                    <InfoLabel label="Nazwa firmy">{user?.company.name}</InfoLabel>
-
-                    <InfoLabel label="BS">{user?.company.bs}</InfoLabel>
-
-                    <InfoLabel label="Tagi">{user?.company.catchPhrase}</InfoLabel>
-                </div>
-            </section>
-            {user && (
+                    <UserBriefView userId={user?.id} extendedView />
+                </Sidebar>
+            </div>
+            {isLoggedUserProfile && (
                 <EditUserDataModal isOpen={isOpen} user={user} onClose={() => setOpen(false)} />
             )}
         </>

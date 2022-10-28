@@ -1,9 +1,8 @@
 import {Link} from 'react-router-dom';
 import {useAppSelector} from 'store';
-import {selectIsAuthenticated} from 'store/reducers';
 
 export function Header() {
-    const isAuthenticated = useAppSelector(selectIsAuthenticated);
+    const {user, isAuthenticated} = useAppSelector(state => state.auth);
 
     return (
         <header className="sticky top-0 z-40 h-53px bg-white border-b-1 border-gray-200">
@@ -25,8 +24,8 @@ export function Header() {
                         </li>
                     </ul>
 
-                    {isAuthenticated ? (
-                        <Link className="text-sm font-bold" to="profile">
+                    {!!user && isAuthenticated ? (
+                        <Link className="text-sm font-bold" to={`/users/${user.id}`}>
                             My account
                         </Link>
                     ) : (

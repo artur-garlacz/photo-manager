@@ -1,10 +1,12 @@
 import {api} from 'services/api';
 import {Post} from 'types';
 
+export type GetPostsArgs = Partial<Pick<Post, 'userId'>>;
+
 export const postsApi = api.injectEndpoints({
     endpoints: build => ({
-        getPosts: build.query<Post[], void>({
-            query: () => ({url: 'posts'}),
+        getPosts: build.query<Post[], GetPostsArgs>({
+            query: (params: GetPostsArgs) => ({url: 'posts', params}),
             providesTags: result =>
                 result
                     ? [
