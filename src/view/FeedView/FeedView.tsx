@@ -34,8 +34,8 @@ export function FeedView() {
 
     const handleChange = ({target: {name, value}}: React.ChangeEvent<HTMLInputElement>) => {
         // searchParams.set(name, value);
-        setSearchParams({[name]: value});
-        setFilters(state => ({...state, [name]: value ? value : undefined}));
+        // setSearchParams({[name]: value});
+        setFilters(state => ({...state, [name]: value || undefined}));
     };
 
     const handleSetFeed = (type: FeedType) => () => {
@@ -90,15 +90,25 @@ export function FeedView() {
                     <h2 className="text-normal font-semibold">Filters</h2>
                 </div>
                 <div className="flex flex-col gap-y-4 pt-4">
-                    <Input label="Id zdjęcia" name="id" type="number" onChange={handleChange} />
-                    <Input
-                        type="number"
-                        label="Id albumu"
-                        name="albumId"
-                        onChange={handleChange}
-                        value={filters?.albumId || ''}
-                    />
-                    <Input label="Id użytkownika" name="userId" onChange={handleChange} />
+                    {isAlbum ? (
+                        <Input label="Id użytkownika" name="userId" onChange={handleChange} />
+                    ) : (
+                        <>
+                            <Input
+                                type="number"
+                                label="Id albumu"
+                                name="albumId"
+                                onChange={handleChange}
+                                value={filters?.albumId || ''}
+                            />
+                            <Input
+                                label="Id zdjęcia"
+                                name="id"
+                                type="number"
+                                onChange={handleChange}
+                            />
+                        </>
+                    )}
                 </div>
             </Sidebar>
         </div>

@@ -1,8 +1,15 @@
+import Button from 'components/ui/Button';
 import {Link} from 'react-router-dom';
-import {useAppSelector} from 'store';
+import {useAppDispatch, useAppSelector} from 'store';
+import {logout} from 'store/reducers';
 
 export function Header() {
     const {user, isAuthenticated} = useAppSelector(state => state.auth);
+    const dispatch = useAppDispatch();
+
+    const handleLogout = () => {
+        dispatch(logout());
+    };
 
     return (
         <header className="sticky top-0 z-40 h-53px bg-white border-b-1 border-gray-200">
@@ -25,11 +32,16 @@ export function Header() {
                     </ul>
 
                     {!!user && isAuthenticated ? (
-                        <Link className="text-sm font-bold" to={`/users/${user.id}`}>
-                            My account
-                        </Link>
+                        <div className="flex items-center gap-x-2">
+                            <Link className="text-sm font-bold" to={`/users/${user.id}`}>
+                                My account
+                            </Link>
+                            <Button onClick={handleLogout}>Logout</Button>
+                        </div>
                     ) : (
-                        <span />
+                        <Link className="text-sm font-bold" to="login">
+                            Login
+                        </Link>
                     )}
                 </nav>
             </div>

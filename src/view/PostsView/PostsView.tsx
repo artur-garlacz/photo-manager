@@ -4,10 +4,11 @@ import Button from 'components/ui/Button';
 import {CreatePostModal} from 'components/modal/CreatePostModal';
 import {useAppSelector} from 'store';
 import {PostListView} from 'components/posts/PostListView';
+import {UserBriefView} from 'components/posts/PostItemView/UserBriefView';
 
 export function PostsView() {
     const [isOpenCreateModal, setOpenCreateModal] = useState(false);
-    const isAuthenticated = useAppSelector(state => state.auth.isAuthenticated);
+    const {isAuthenticated, user} = useAppSelector(state => state.auth);
 
     const handleToggle = useCallback(() => {
         setOpenCreateModal(state => !state);
@@ -28,7 +29,7 @@ export function PostsView() {
 
                     <PostListView />
                 </section>
-                <Sidebar>sd</Sidebar>
+                <Sidebar>{!!user && <UserBriefView userId={user.id} extendedView />}</Sidebar>
             </div>
             {isOpenCreateModal && (
                 <CreatePostModal isOpen={isOpenCreateModal} onClose={handleToggle} />
