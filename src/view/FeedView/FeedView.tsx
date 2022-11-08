@@ -33,9 +33,11 @@ export function FeedView() {
     }, []);
 
     const handleChange = ({target: {name, value}}: React.ChangeEvent<HTMLInputElement>) => {
-        // searchParams.set(name, value);
-        // setSearchParams({[name]: value});
         setFilters(state => ({...state, [name]: value || undefined}));
+        if (!value && !!searchParams.get(name)) {
+            searchParams.delete(name);
+            setSearchParams({...searchParams});
+        }
     };
 
     const handleSetFeed = (type: FeedType) => () => {
@@ -91,7 +93,12 @@ export function FeedView() {
                 </div>
                 <div className="flex flex-col gap-y-4 pt-4">
                     {isAlbum ? (
-                        <Input label="Id użytkownika" name="userId" onChange={handleChange} />
+                        <Input
+                            label="Id użytkownika"
+                            name="userId"
+                            value={filters?.userId || ''}
+                            onChange={handleChange}
+                        />
                     ) : (
                         <>
                             <Input
@@ -105,6 +112,7 @@ export function FeedView() {
                                 label="Id zdjęcia"
                                 name="id"
                                 type="number"
+                                value={filters?.id || ''}
                                 onChange={handleChange}
                             />
                         </>

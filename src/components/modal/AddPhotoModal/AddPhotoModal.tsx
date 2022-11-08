@@ -23,8 +23,6 @@ export function AddPhotoModal({isOpen, onClose}: AddPhotoModalProps) {
                             className={'w-full'}
                             options={albumOptions}
                             onChange={option => setFieldValue('albumId', option?.value)}
-                            // styles={touched.state && errors.state ? errorStyles : styles}
-                            // theme={theme}
                         />
 
                         <Input

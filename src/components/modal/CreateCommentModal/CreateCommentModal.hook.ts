@@ -16,26 +16,17 @@ export function useCreateCommentModal({onClose, postId}: Props) {
         body: string().min(3).required()
     });
 
-    // userId: number;
-    // id: number;
-
     const {values, touched, errors, handleSubmit, handleChange} = useFormik({
         initialValues: {
             name: '',
             body: ''
         },
         validationSchema,
-        onSubmit: async (payload, {setErrors}) => {
+        onSubmit: async payload => {
             try {
                 await createComment({...payload, postId});
                 onClose();
-                // toast.success(t('disputeSubmitted'));
-            } catch (err) {
-                // if (err.message) {
-                //     // toast.error(err.message);
-                // }
-                // setErrors(err.errors ?? {});
-            }
+            } catch (err) {}
         }
     });
 

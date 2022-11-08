@@ -6,11 +6,13 @@ import {useNavigate} from 'react-router-dom';
 import {useAppSelector} from 'store';
 import {useLoginUserQuery} from 'store/actions';
 
+const DEFAULT_USER_ID = 1; // magic number to log user
+
 export function LoginView() {
     const [submitted, setSubmitted] = useState(false);
     const {t} = useTranslation('auth');
     const navigate = useNavigate();
-    useLoginUserQuery(1, {skip: !submitted}); // magic number to log user
+    useLoginUserQuery(DEFAULT_USER_ID, {skip: !submitted});
     const isAuthenticated = useAppSelector(state => state.auth.isAuthenticated);
 
     useEffect(() => {

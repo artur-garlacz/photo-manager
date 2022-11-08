@@ -36,17 +36,11 @@ export function useEditUserDataModal({onClose, user}: Props) {
             ...initialValues
         },
         validationSchema,
-        onSubmit: async (payload, {setErrors}) => {
+        onSubmit: async payload => {
             try {
                 await updateUser({...payload, id});
                 onClose();
-                // toast.success(t('disputeSubmitted'));
-            } catch (err) {
-                // if (err.message) {
-                //     // toast.error(err.message);
-                // }
-                // setErrors(err.errors ?? {});
-            }
+            } catch (err) {}
         }
     });
 

@@ -1,5 +1,5 @@
 import {GetPhotosArgs} from 'store/actions/photos';
-import {PhotoItemView} from './PhotoItemView';
+import {PhotoItemView} from '../PhotoItemView';
 import {Photo} from 'types';
 import {useCallback, useState} from 'react';
 import InfiniteScroll from 'react-infinite-scroller';

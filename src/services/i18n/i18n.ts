@@ -1,8 +1,5 @@
-//Services
 import i18n from 'i18next';
 import {initReactI18next} from 'react-i18next';
-
-//Translations
 import en from './en';
 
 import './i18n';

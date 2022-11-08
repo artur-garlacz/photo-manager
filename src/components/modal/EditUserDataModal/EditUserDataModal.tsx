@@ -116,6 +116,7 @@ export function EditUserDataModal({isOpen, user, onClose}: EditUserDataModalProp
                         className="mr-2"
                         outline
                         onClick={onClose}
+                        type="button"
                     >
                         Cancel
                     </Button>
